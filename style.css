@@ -21,6 +21,15 @@ button {
     cursor: pointer;
 }
 
+#stopwatch {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    color: white;
+    z-index: 10;
+}
+
 #game-container {
     position: absolute;
     top: 10%; /* Adjusts the top margin */
