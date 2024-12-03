@@ -1,1 +1,26 @@
-<h1>Hello!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Luigi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main-menu">
+        <h1>Find Luigi</h1>
+        <button onclick="startSinglePlayer()">Single Player</button>
+        <button onclick="startMultiplayer()">Multiplayer</button>
+    </div>
+    <div id="difficulty-selection" style="display: none;">
+        <h2>Select Difficulty</h2>
+        <button onclick="setDifficulty('easy')">Easy</button>
+        <button onclick="setDifficulty('medium')">Medium</button>
+        <button onclick="setDifficulty('hard')">Hard</button>
+        <button onclick="setDifficulty('insane')">Insane</button>
+    </div>
+    <div id="game-container" style="display: none;">
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
