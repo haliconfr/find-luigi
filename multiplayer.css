@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    color: white;
+    overflow: hidden;
+}
+
+#username-input {
+    width: 250px;
+    height: 40px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 18px;
+    padding: 1px;
+}
+  
+#submit-button {
+  width: 25px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#game-container {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vmin;
+  height: 80vmin;
+  border: 2px solid rgb(172, 172, 172);
+  box-sizing: border-box;
+}

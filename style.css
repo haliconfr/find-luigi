@@ -30,15 +30,25 @@ button {
     z-index: 10;
 }
 
+#options-menu {
+    position: absolute;
+    top: 420px; /* Adjust this value based on the height of the button */
+    left: 550px; /* Position the menu to the left, aligned with the button */
+    display: none; /* Initially hidden */
+    padding: 10px;
+    border: 1px solid grey;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
 #game-container {
     position: absolute;
-    top: 10%; /* Adjusts the top margin */
+    top: 10%;
     left: 50%;
-    transform: translateX(-50%); /* Centers horizontally */
-    width: 80vmin; /* Square size based on viewport */
-    height: 80vmin; /* Ensures the box is square */
-    border: 2px solid rgb(172, 172, 172); /* White border */
-    box-sizing: border-box; /* Includes border in the element's size */
+    transform: translateX(-50%);
+    width: 80vmin;
+    height: 80vmin;
+    border: 2px solid rgb(172, 172, 172);
+    box-sizing: border-box;
 }
 
 #difficulty-selector button {

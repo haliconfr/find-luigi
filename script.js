@@ -1,4 +1,4 @@
-// Get the game-container element
+// Made for 1495 x 712
 const gameContainer = document.getElementById('game-container');
 
 // Create a canvas element dynamically
@@ -20,6 +20,8 @@ let levelTimes = [];
 let uniqueObject = null;
 let gameRunning = false;
 let showStopwatch = localStorage.getItem('showStopwatch') === 'true';
+let optionsOpen = false;
+let multiplayerSelected = false;
 
 const ctx = canvas.getContext('2d');
 const optionsButton = document.getElementById('options-button');
@@ -30,14 +32,8 @@ const closeOptionsButton = document.getElementById('close-options');
 const stopwatchElement = document.getElementById('stopwatch-display');
 
 // Set canvas size to match the game-container
-canvas.width = 566; // 80vmin based on viewport width
-canvas.height = 566; // 80vmin (assuming square container)
-
-//optionsButton.addEventListener('click', () => {
-//    optionsMenu.style.display = 'block';  // Show the options menu
-//    optionsMenu.style.position = 'absolute'; // Make sure it's below the "Start Game" button
-//    optionsMenu.style.top = 'calc(100% + 10px)';  // Position it below the "Start Game" button
-//});
+canvas.width = 567; // 80vmin based on viewport width
+canvas.height = 567; // 80vmin (assuming square container)
 
 const difficulties = {
     easy: { objectCount: 80, objectSize: 65 },
@@ -79,6 +75,8 @@ class GameObject {
 }
 
 function initializeGame(difficulty) {
+    stopwatch = 0;
+    updateStopwatchDisplay();
     objects = [];
     const { objectCount, objectSize } = difficulties[difficulty];
 
@@ -97,6 +95,11 @@ function initializeGame(difficulty) {
     }
 }
 
+function startMultiPlayer(){
+    multiplayerSelected = true;
+    startSinglePlayer();
+}
+
 function animate() {
     if (!gameRunning) return;
 
@@ -112,6 +115,7 @@ function animate() {
 
 // Start single-player game
 function startSinglePlayer() {
+    optionsMenu.style.display = 'none';
     document.getElementById('main-menu').style.display = 'none';
     document.getElementById('difficulty-selection').style.display = 'block';
     const difficultyButtons = document.querySelectorAll('.difficulty-button');
@@ -122,18 +126,33 @@ function startSinglePlayer() {
 }
 
 function proceedToCustomization() {
-    randomizeDifficulties();  // Randomize the selected difficulty order
-
+    if(multiplayerSelected){
+        // Load the multiplayer script
+        localStorage.setItem('selectedDifficulties', JSON.stringify(selectedDifficulties));
+        const script = document.createElement('script');
+        script.src = 'multiplayer.js';
+        document.body.appendChild(script);
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'multiplayer.html', true);
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            document.body.innerHTML = xhr.responseText;
+          }
+        };
+        xhr.send();
+    }else{
+        randomizeDifficulties();  // Randomize the selected difficulty order
+        updateStopwatchVisibility();
+        startLevelSeries();
+    }
     document.getElementById('difficulty-selection').style.display = 'none';
-    updateStopwatchVisibility();
-    startLevelSeries();
 }
 
 // Set difficulty and start game
 function setDifficulty(difficulty) {
     toggleDifficulty(difficulty);
     updateDifficultyButtonColours();  // Update button colors after selection
-    console.log('Selected difficulties:', selectedDifficulties);
+    console.log('Selected difficulties:', selectedDifficulties);    
 }
 
 function toggleDifficulty(difficulty) {
@@ -205,17 +224,25 @@ function updateStopwatchVisibility() {
 }
 
 optionsButton.addEventListener('click', () => {
-    optionsMenu.style.display = 'block';  // Show the options menu
+    if(optionsOpen){
+        optionsMenu.style.display = 'none';
+        optionsOpen = false;
+    }else{
+        optionsMenu.style.display = 'block';
+        optionsOpen = true;
+    }
 });
 
 saveOptionsButton.addEventListener('click', () => {
     showStopwatch = showStopwatchToggle.checked; // Update the showStopwatch value
     localStorage.setItem('showStopwatch', showStopwatch);  // Save it to localStorage
     optionsMenu.style.display = 'none';  // Close the options menu after saving
+    optionsOpen = false;
 });
 
 closeOptionsButton.addEventListener('click', () => {
     optionsMenu.style.display = 'none';  // Close the options menu without saving
+    optionsOpen = false;
 });
 
 
@@ -245,13 +272,13 @@ function endSeries() {
 
     endingScreen.innerHTML = `
         <h2>Series Complete!</h2>
-        <h3>Your Total Points: ${totalPoints}</h3> <!-- Show the total points -->
+        <h3>Total Points: ${totalPoints}</h3> <!-- Show the total points -->
         <ul>
             ${levelSeries
                 .map((difficulty, index) => {
                     const timeTaken = levelTimes[index];  // Retrieve time for each level
                     const levelPoints = calculateLevelPoints(difficulty, timeTaken);
-                    return `<li>${difficulty} - Time: ${timeTaken}s - Points: ${levelPoints}</li>`;
+                    return `<li>${capitalizeFirstLetter(difficulty)} - Time: ${timeTaken}s - Points: ${levelPoints}</li>`;
                 })
                 .join('')}
         </ul>
@@ -260,6 +287,10 @@ function endSeries() {
     stopwatch = 0;
     stopwatchElement.style.display = 'none';
     document.body.appendChild(endingScreen); // Add the ending screen to the page
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function completeLevel(difficulty, timeTaken) {
@@ -290,7 +321,6 @@ function calculateLevelPoints(difficulty, timeTaken) {
     const basePoints = 100; // Base points for completing any level
     const difficultyMultiplier = getDifficultyMultiplier(difficulty);
 
-    // Let's set a reasonable scaling factor for time-based penalty (e.g., 2 seconds per penalty)
     const timePenaltyFactor = 2;  // The larger this value, the more time impacts the score
 
     // Calculate the raw score based on difficulty
