@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Luigi - Multiplayer</title>
+    <link rel="stylesheet" href="multiplayer.css">
+</head>
+<body>
+    <div id="responsive-container">
+        <div id="username-input-container">
+            <input type="text" id="username-input" maxlength="9" placeholder="Enter your username">
+            <button id="submit-button">>></button>
+        </div>
+
+        <div id="waiting-room" style="display: none;">
+            <h2>Finding opponent...</h2>
+            <p id="connection-status"></p>
+        </div>
+
+        <div id="level-order-container" style="display: none;">
+            <div id="difficulty-options" style="display: flex; justify-content: space-around; margin-bottom: 20px;"></div>
+            <div id="level-slots-container" style="display: flex; justify-content: space-around; margin-bottom: 20px;">
+                <div class="level-slot" style="width: 100px; height: 50px; border: 1px solid #ccc;"></div>
+                <div class="level-slot" style="width: 100px; height: 50px; border: 1px solid #ccc;"></div>
+                <div class="level-slot" style="width: 100px; height: 50px; border: 1px solid #ccc;"></div>
+                <div class="level-slot" style="width: 100px; height: 50px; border: 1px solid #ccc;"></div>
+            </div>
+            <div id="timer" style="text-align: center; margin-bottom: 20px;"></div>
+            <button id="confirm-order" style="display: block; margin: 0 auto;">Confirm Order</button>
+        </div>
+
+        <div id="stopwatch-display" style="display: none;"></div>
+
+        <div id="game-container" style="display: none;"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="multiplayer.js"></script>
+</body>
+</html>

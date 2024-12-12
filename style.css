@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    color: white;
+    overflow: hidden;
+}
+
+#main-menu {
+    text-align: center;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#stopwatch {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    color: white;
+    z-index: 10;
+}
+
+#options-menu {
+    position: absolute;
+    top: 420px;
+    left: 550px;
+    display: none;
+    padding: 10px;
+    border: 1px solid grey;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+#game-container {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vmin;
+    height: 80vmin;
+    border: 2px solid rgb(172, 172, 172);
+    box-sizing: border-box;
+}
+
+#difficulty-selector button {
+    margin: 5px;
+    padding: 5px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}

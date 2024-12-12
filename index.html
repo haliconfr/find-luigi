@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Luigi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main-menu">
+        <h1>Find Luigi</h1>
+        <button onclick="startSinglePlayer()">Single Player</button>
+        <button onclick="startMultiPlayer()">Multiplayer</button>
+        <button id="options-button">Options</button>
+    </div>
+    <div id="difficulty-selection" style="display: none;">
+        <h2>Select Difficulties</h2>
+        <button id="easy" data-difficulty="easy" class="difficulty-button" onclick="setDifficulty('easy')">Easy</button>
+        <button id="medium" data-difficulty="medium" class="difficulty-button" onclick="setDifficulty('medium')">Medium</button>
+        <button id="hard" data-difficulty="hard" class="difficulty-button" onclick="setDifficulty('hard')">Hard</button>
+        <button id="insane" data-difficulty="insane" class="difficulty-button" onclick="setDifficulty('insane')">Insane</button>
+        <button id="difNext" onclick="proceedToCustomization()">Next</button>
+    </div>
+    <div id="options-menu" style="display: none;">
+        <label for="show-stopwatch-toggle">Show Stopwatch:</label>
+        <input type="checkbox" id="show-stopwatch-toggle" checked=true>
+        <button id="save-options">Save</button>
+        <button id="close-options">Close</button>
+    </div>
+    <div id="stopwatch-display" style="position: absolute; top: 10px; right: 10px; font-size: 18px; color: white;"></div>
+    <div id="game-container" style="display: none;"></div>
+    <script src="script.js"></script>
+</body>
+</html>
